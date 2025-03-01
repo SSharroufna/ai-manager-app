@@ -1,23 +1,26 @@
-{
-    "agenda": [
-        "Review of motor design and geometry",
-        "Discussion of propellant selection",
-        "Review of electronics diagram for sensors",
-        "Testing and integration of Arduino code",
-        "Assembly and strength testing of test stand"
-    ],
-    "Propulsion": [
-        "Define motor geometry",
-        "Complete thrust analysis calculations",
-        "Choose a type of solid fuel (e.g. APCP)"
-    ],
-    "Electronics": [
-        "Draw electronics diagram for sensors",
-        "Test Arduino code"
-    ],
-    "Structures": [
-        "Build test stand",
-        "Assemble test stand",
-        "Strength test the test stand using hydraulic press"
-    ]
-}
+[
+    {
+        "category": "Propulsion",
+        "tasks": [
+            "Define motor geometry (02/20/2025)",
+            "Choose the type of solid fuel (02/15/2025)",
+            "Complete thrust analysis calculations (02/10/2025)"
+        ]
+    },
+    {
+        "category": "Electronics",
+        "tasks": [
+            "Draw an electronics diagram for the sensors (02/12/2025)",
+            "Test the Arduino (02/18/2025)"
+        ]
+    },
+    {
+        "category": "Structures",
+        "tasks": [
+            "Build the test stand (02/22/2025)",
+            "Assemble the test stand (02/25/2025)",
+            "Strength test the test stand (02/28/2025)",
+            "Set up the hydraulic press for testing (02/26/2025)"
+        ]
+    }
+]
