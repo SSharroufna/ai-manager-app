@@ -1,7 +1,7 @@
 // pages/index.tsx
 'use client';
 
-import { useRouter } from 'next/navigation';  // Import useRouter hook from Next.js
+import { useRouter } from 'next/navigation';
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Mic, Upload, Loader2 } from "lucide-react"
 import AudioRecorder from "@/components/audio-recorder"
 import AudioUploader from "@/components/audio-uploader"
-import TaskList from "@/components/TaskList" // Import the TaskList component
 
 export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false)
@@ -58,7 +57,7 @@ export default function Home() {
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">Task Organizer</CardTitle>
             <CardDescription>
-              Record or upload a conversation where tasks are being delegated, and we'll organize them by team.
+              Record a conversation where tasks are being delegated, and we'll organize them by team.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -81,7 +80,7 @@ export default function Home() {
               </TabsContent>
             </Tabs>
           </CardContent>
-          <CardFooter className="flex justify-center">
+          <CardFooter className="flex justify-between">
             <Button
                 onClick={handleProcessAudio}
                 disabled={!audioBlob || isProcessing}
@@ -96,6 +95,7 @@ export default function Home() {
                   "Process Conversation"
               )}
             </Button>
+            <Button onClick={handleClick} className="">Show Task</Button>
           </CardFooter>
         </Card>
       </main>
