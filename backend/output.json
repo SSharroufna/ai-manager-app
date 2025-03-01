@@ -1,0 +1,23 @@
+{
+    "agenda": [
+        "Review of motor design and geometry",
+        "Discussion of propellant selection",
+        "Review of electronics diagram for sensors",
+        "Testing and integration of Arduino code",
+        "Assembly and strength testing of test stand"
+    ],
+    "Propulsion": [
+        "Define motor geometry",
+        "Complete thrust analysis calculations",
+        "Choose a type of solid fuel (e.g. APCP)"
+    ],
+    "Electronics": [
+        "Draw electronics diagram for sensors",
+        "Test Arduino code"
+    ],
+    "Structures": [
+        "Build test stand",
+        "Assemble test stand",
+        "Strength test the test stand using hydraulic press"
+    ]
+}
