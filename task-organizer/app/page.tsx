@@ -1,3 +1,5 @@
+// pages/index.tsx
+
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -6,6 +8,7 @@ import { Mic, Upload, Loader2 } from "lucide-react"
 import AudioRecorder from "@/components/audio-recorder"
 import AudioUploader from "@/components/audio-uploader"
 import { useRouter } from "next/navigation"
+import TaskList from "@/components/TaskList" // Import the TaskList component
 
 export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false)
@@ -57,43 +60,40 @@ export default function Home() {
             <Tabs defaultValue="record" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="record">
-                  <Mic className="mr-2 h-4 w-4"/>
+                  <Mic className="mr-2 h-4 w-4" />
                   Record Audio
                 </TabsTrigger>
                 <TabsTrigger value="upload">
-                  <Upload className="mr-2 h-4 w-4"/>
+                  <Upload className="mr-2 h-4 w-4" />
                   Upload Audio
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="record" className="mt-4">
-                <AudioRecorder onAudioCaptured={handleAudioCaptured}/>
+                <AudioRecorder onAudioCaptured={handleAudioCaptured} />
               </TabsContent>
               <TabsContent value="upload" className="mt-4">
-                <AudioUploader onAudioCaptured={handleAudioCaptured}/>
+                <AudioUploader onAudioCaptured={handleAudioCaptured} />
               </TabsContent>
             </Tabs>
           </CardContent>
           <CardFooter className="flex justify-center">
-            {tasks.length > 0 ? (
-                <ul className="w-full max-w-xs">
-                  {tasks.map((task, index) => (
-                      <li key={index} className="p-2 border-b border-gray-200">
-                        {task}
-                      </li>
-                  ))}
-                </ul>
-            ) : (
-                <Button onClick={handleProcessAudio} disabled={!audioBlob || isProcessing} className="w-full max-w-xs">
+                <Button
+                    onClick={handleProcessAudio}
+                    disabled={!audioBlob || isProcessing}
+                    className="w-full max-w-xs"
+                >
                   {isProcessing ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         Processing...
                       </>
                   ) : (
                       "Process Conversation"
                   )}
                 </Button>
-            )}
+            <Button onClick={() => setTasks([])} className="w-full max-w-xs mt-4">
+                Show Tasks
+            </Button>
           </CardFooter>
         </Card>
       </main>
