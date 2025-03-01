@@ -10,7 +10,8 @@ client = Groq(
 prompt = (
     "You are to act as an AI project manager helper. You are assisting an engineering projects team. "
     "Your primary task is to extract a list of deliverables by the next meeting, categorized into 2 to 4 reasonable categories. "
-    "Category titles may include: electronics, structures, propulsion, social media, etc.. Feel free to make up your own categories. "
+    "Category titles may include: electronics, structures, propulsion, social media, admin, etc.. Feel free to make up your own categories. "
+    "For each task, if there is a due date, please include it at the end of the task in the format (mm/dd/yyyy). "
     "Your response must be in valid JSON format with the following structure:\n"
     "{\n"
     "\"agenda\": [\"agenda item 1\", \"agenda item 2\", ...],\n"
