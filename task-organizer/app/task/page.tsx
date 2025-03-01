@@ -1,24 +1,29 @@
-'use cleint';
-import React, { useState } from 'react'
-import TaskList from '@/components/TaskList'
+'use client';
+import React, { useEffect, useState } from 'react';
+import TaskList from '@/components/TaskList';
+
+interface Category {
+    category: string;
+    tasks: string[];
+}
 
 const TaskPage: React.FC = () => {
-    const categories = [
-        {
-            category: "Electronics",
-            tasks: ["Task 1", "Task 2", "Task 3"]
-        },
-        {
-            category: "Structures",
-            tasks: ["Task 4", "Task 5"]
-        },
-        {
-            category: "Propulsion",
-            tasks: ["Task 6", "Task 7", "Task 8"]
-        }
-    ];
-
+    const [categories, setCategories] = useState<Category[]>([]);
     const teamMembers = ["Alice", "Bob", "Charlie", "David"];
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('/path/to/your/categories.json');
+                const data: Category[] = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
@@ -32,7 +37,7 @@ const TaskPage: React.FC = () => {
                 ))}
             </div>
         </main>
-    )
-}
+    );
+};
 
-export default TaskPage
+export default TaskPage;
