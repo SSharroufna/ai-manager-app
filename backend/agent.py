@@ -45,6 +45,7 @@ chat_completion = client.chat.completions.create(
 print(chat_completion.choices[0].message.content)
 
 # Save the response as a .json file
-output_path = os.path.join(os.path.dirname(__file__), "output.json")
+output_path = os.path.join(os.path.dirname(__file__), "../task-organizer/public/output.json")
+print(output_path)
 with open(output_path, "w") as json_file:
     json.dump(json.loads(chat_completion.choices[0].message.content), json_file, indent=4)
