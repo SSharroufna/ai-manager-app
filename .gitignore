@@ -25,3 +25,4 @@ Thumbs.db   # Windows
 
 # JetBrains IDEs
 .idea/
+/myvenv
