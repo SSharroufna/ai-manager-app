@@ -34,7 +34,7 @@ export default function Home() {
     formData.append("audio", audioBlob)
 
     try {
-      const response = await fetch("/api/process-audio", {
+      const response = await fetch("http://localhost:3001/uploadedFile", {
         method: "POST",
         body: formData,
       })

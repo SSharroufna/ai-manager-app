@@ -11,7 +11,7 @@
                 "dueDate": ""
             },
             {
-                "name": "Choose type of solid fuel",
+                "name": "Choose the type of solid fuel",
                 "dueDate": ""
             }
         ]
@@ -20,15 +20,11 @@
         "category": "Electronics",
         "tasks": [
             {
-                "name": "Draw electronics diagram for sensors",
+                "name": "Draw electronics diagram for the sensors",
                 "dueDate": "03/03/2025"
             },
             {
-                "name": "Test Arduino",
-                "dueDate": ""
-            },
-            {
-                "name": "Ensure code works before integration",
+                "name": "Test the Arduino",
                 "dueDate": ""
             }
         ]
@@ -37,19 +33,15 @@
         "category": "Structures",
         "tasks": [
             {
-                "name": "Build test stand",
+                "name": "Build the test stand",
                 "dueDate": "03/02/2025"
             },
             {
-                "name": "Assemble test stand",
+                "name": "Assemble the test stand",
                 "dueDate": ""
             },
             {
-                "name": "Strength test the test stand",
-                "dueDate": ""
-            },
-            {
-                "name": "Set up hydraulic press for testing",
+                "name": "Strength test the test stand using hydraulic press",
                 "dueDate": ""
             }
         ]

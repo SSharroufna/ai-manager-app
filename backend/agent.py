@@ -64,7 +64,7 @@ with open(output_path, "w") as json_file:
     json.dump(json.loads(chat_completion.choices[0].message.content), json_file, indent=4)
 
 # Define the path to the transcription file
-transcription_file_path = "backend/transcription.txt"
+transcription_file_path = "../backend/transcription.txt"
 
 # Read the transcription
 with open(transcription_file_path, "r", encoding="utf-8") as file:
