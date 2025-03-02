@@ -47,13 +47,14 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers }) => {
 
 interface TaskListProps {
     tasks: string[];
+    catagory: string;
     teamMembers: string[];
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, teamMembers }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, catagory, teamMembers }) => {
     return (
-        <div className="w-full max-w-xs mt-4 mx-auto bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
-            <h3 className="text-lg font-semibold mb-2 text-center">Tasks</h3>
+        <div className="w-full max-w-xl mt-4 mx-auto bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
+            <h3 className="text-lg font-semibold mb-2 text-center">{catagory}</h3>
             <ul className="list-disc pl-5 w-full">
                 {tasks.map((task, index) => (
                     <TaskItem key={index} task={task} teamMembers={teamMembers} />
