@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import TaskList from '@/components/TaskList';
@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 
 interface Task {
     name: string;
-    assignedTo?: string; 
+    assignedTo?: string; // Track assigned member
 }
 
 interface Category {
@@ -16,30 +16,48 @@ interface Category {
 
 const TaskPage: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const [assignments, setAssignments] = useState<Record<string, Task[]>>({}); 
+    const [assignments, setAssignments] = useState<Record<string, string>>({}); // Tracks assigned tasks
+
     const teamMembers = ["Alice", "Bob", "Charlie", "David"];
 
+    // 🟢 Load saved assignments from localStorage
+    useEffect(() => {
+        const savedAssignments = localStorage.getItem('assignments');
+        if (savedAssignments) {
+            setAssignments(JSON.parse(savedAssignments));
+        }
+    }, []);
+
+    // 🟢 Load categories from JSON
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await fetch('/output.json');
                 const data: { category: string; tasks: string[] }[] = await response.json();
+
                 const updatedData: Category[] = data.map(cat => ({
                     category: cat.category,
-                    tasks: cat.tasks.map(task => ({ name: task, assignedTo: undefined })) 
+                    tasks: cat.tasks.map(task => ({
+                        name: task,
+                        assignedTo: assignments[task] || undefined, // Assign saved data
+                    }))
                 }));
-        
-                setCategories(updatedData); 
+
+                setCategories(updatedData);
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
-        
 
         fetchCategories();
-    }, []);
+    }, [assignments]); // Update when assignments change
 
+    // 🟢 Handle assigning tasks and save to localStorage
     const handleAssignTask = (taskName: string, member: string) => {
+        const updatedAssignments = { ...assignments, [taskName]: member };
+        setAssignments(updatedAssignments);
+        localStorage.setItem('assignments', JSON.stringify(updatedAssignments));
+
         setCategories(prevCategories =>
             prevCategories.map(category => ({
                 ...category,
@@ -48,11 +66,6 @@ const TaskPage: React.FC = () => {
                 )
             }))
         );
-    
-        setAssignments(prevAssignments => ({
-            ...prevAssignments,
-            [member]: [...(prevAssignments[member] || []), { name: taskName }]
-        }));
     };
 
     return (
@@ -74,7 +87,7 @@ const TaskPage: React.FC = () => {
                     ))}
                 </div>
 
-                {}
+                {/* Right side - Team Member Task Boards */}
                 <div className="w-1/3">
                     <h2 className="text-xl font-bold mb-4">Team Members</h2>
                     <div className="flex flex-col gap-4">
@@ -82,9 +95,13 @@ const TaskPage: React.FC = () => {
                             <div key={member} className="bg-white p-4 rounded-lg shadow-md">
                                 <h3 className="text-lg font-semibold">{member}</h3>
                                 <ul className="mt-2">
-                                    {assignments[member]?.map((task, index) => (
-                                        <li key={index} className="bg-gray-200 p-2 rounded mt-1">{task.name}</li>
-                                    )) || <p className="text-gray-500">No tasks assigned</p>}
+                                    {Object.entries(assignments)
+                                        .filter(([_, assignedMember]) => assignedMember === member)
+                                        .map(([taskName], index) => (
+                                            <li key={index} className="bg-gray-200 p-2 rounded mt-1">
+                                                {taskName}
+                                            </li>
+                                        )) || <p className="text-gray-500">No tasks assigned</p>}
                                 </ul>
                             </div>
                         ))}

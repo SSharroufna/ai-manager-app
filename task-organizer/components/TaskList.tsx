@@ -14,23 +14,22 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers, onAssign }) => {
 
     return (
         <li className="p-2 border-b border-gray-200 flex items-center justify-between space-x-4">
-            <span className="flex-grow text-left">{task.name}</span> {}
+            <span className="flex-grow text-left">{task.name}</span>
             <div className="relative">
                 <button
-                    className={`px-4 py-2 rounded-md ${task.assignedTo ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+                    className={`px-4 py-2 rounded-md ${task.assignedTo ? "bg-gray-400 text-white" : "bg-blue-500 text-white hover:bg-blue-600"}`}
                     onClick={toggleMenu}
-                    disabled={!!task.assignedTo}
                 >
                     {task.assignedTo ? `${task.assignedTo}` : "Assign"}
                 </button>
-                {isOpen && !task.assignedTo && (
+                {isOpen && (
                     <ul className="absolute bg-white shadow-md rounded-lg mt-2 p-2 w-48 border border-gray-300 z-10">
                         {teamMembers.map((member, index) => (
                             <li
                                 key={index}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
                                 onClick={() => {
-                                    onAssign(task.name, member); 
+                                    onAssign(task.name, member);
                                     setIsOpen(false);
                                 }}
                             >
