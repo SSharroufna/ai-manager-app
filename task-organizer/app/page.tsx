@@ -1,41 +1,95 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import TaskList from '@/components/TaskList';
 import Navbar from "@/components/Navbar";
 
-interface data {
+interface Task {
+    name: string;
+    assignedTo?: string; 
+}
+
+interface Category {
     category: string;
-    tasks: string[];
+    tasks: Task[];
 }
 
 const TaskPage: React.FC = () => {
-    const [categories, setCategories] = useState<data[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [assignments, setAssignments] = useState<Record<string, Task[]>>({}); 
     const teamMembers = ["Alice", "Bob", "Charlie", "David"];
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await fetch('/output.json');
-                const data: data[] = await response.json();
-                setCategories(data);
+                const data: { category: string; tasks: string[] }[] = await response.json();
+                const updatedData: Category[] = data.map(cat => ({
+                    category: cat.category,
+                    tasks: cat.tasks.map(task => ({ name: task, assignedTo: undefined })) 
+                }));
+        
+                setCategories(updatedData); 
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
         };
+        
 
         fetchCategories();
     }, []);
 
+    const handleAssignTask = (taskName: string, member: string) => {
+        setCategories(prevCategories =>
+            prevCategories.map(category => ({
+                ...category,
+                tasks: category.tasks.map(task =>
+                    task.name === taskName ? { ...task, assignedTo: member } : task
+                )
+            }))
+        );
+    
+        setAssignments(prevAssignments => ({
+            ...prevAssignments,
+            [member]: [...(prevAssignments[member] || []), { name: taskName }]
+        }));
+    };
+
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
-            <Navbar /> {/* Add Navbar at the top */}
-            <div className="w-full max-w-3xl text-center mt-8">
-                <h1 className="text-2xl font-bold mb-20">Tasks</h1>
-                {categories.map((data, index) => (
-                    <div key={index} className="mb-4">
-                        <TaskList tasks={data.tasks} catagory={data.category} teamMembers={teamMembers} />
+        <main className="flex min-h-screen flex-col bg-gray-50">
+            <Navbar />
+            <div className="flex w-full p-6 gap-8">
+                {/* Left side - Task Categories */}
+                <div className="w-2/3 bg-white p-4 rounded-lg shadow-md">
+                    <h1 className="text-xl font-bold mb-4">Tasks</h1>
+                    {categories.map((data, index) => (
+                        <div key={index} className="mb-4">
+                            <TaskList 
+                                tasks={data.tasks} 
+                                category={data.category} 
+                                teamMembers={teamMembers} 
+                                onAssign={handleAssignTask} 
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                {}
+                <div className="w-1/3">
+                    <h2 className="text-xl font-bold mb-4">Team Members</h2>
+                    <div className="flex flex-col gap-4">
+                        {teamMembers.map(member => (
+                            <div key={member} className="bg-white p-4 rounded-lg shadow-md">
+                                <h3 className="text-lg font-semibold">{member}</h3>
+                                <ul className="mt-2">
+                                    {assignments[member]?.map((task, index) => (
+                                        <li key={index} className="bg-gray-200 p-2 rounded mt-1">{task.name}</li>
+                                    )) || <p className="text-gray-500">No tasks assigned</p>}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
         </main>
     );
