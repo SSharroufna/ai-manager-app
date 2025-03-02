@@ -1,25 +1,25 @@
 [
     {
+        "category": "Structures",
+        "tasks": [
+            "Build the test stand (03/05/2025)",
+            "Assemble the test stand (03/10/2025)",
+            "Strength test the test stand (03/12/2025)"
+        ]
+    },
+    {
         "category": "Propulsion",
         "tasks": [
-            "Define motor geometry",
-            "Choose the type of solid fuel (e.g., apcp)",
-            "Complete thrust analysis calculations (02/20/2025)"
+            "Define the motor geometry (03/05/2025)",
+            "Choose the type of solid fuel (03/05/2025)",
+            "Complete thrust analysis calculations (03/03/2025)"
         ]
     },
     {
         "category": "Electronics",
         "tasks": [
-            "Draw an electronics diagram for the sensors (02/19/2025)",
-            "Test the Arduino and ensure the code works (02/22/2025)"
-        ]
-    },
-    {
-        "category": "Structures",
-        "tasks": [
-            "Build the test stand (02/21/2025)",
-            "Assemble the test stand (02/24/2025)",
-            "Strength test the test stand using the hydraulic press (02/25/2025)"
+            "Draw an electronics diagram for the sensors (03/04/2025)",
+            "Test the Arduino (03/06/2025)"
         ]
     }
 ]

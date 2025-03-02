@@ -49,3 +49,25 @@ output_path = os.path.join(os.path.dirname(__file__), "../task-organizer/public/
 print(output_path)
 with open(output_path, "w") as json_file:
     json.dump(json.loads(chat_completion.choices[0].message.content), json_file, indent=4)
+
+# Define the path to the transcription file
+transcription_file_path = "backend/transcriptions/transcription.txt"
+
+# Read the transcription
+with open(transcription_file_path, "r", encoding="utf-8") as file:
+    transcription = file.read()
+
+# Process the transcription (example processing)
+tasks = [
+    {"description": "Task 1", "deadline": "Next Friday", "priority": "High"},
+    {"description": "Task 2", "deadline": "End of the month", "priority": "Medium"},
+]
+
+# Create the result
+result = {
+    "transcription": transcription,
+    "tasks": tasks,
+}
+
+# Print the result as JSON
+print(json.dumps(result))
