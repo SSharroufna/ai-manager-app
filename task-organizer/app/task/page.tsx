@@ -2,20 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import TaskList from '@/components/TaskList';
 
-interface Category {
+interface data {
     category: string;
     tasks: string[];
 }
 
 const TaskPage: React.FC = () => {
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<data[]>([]);
     const teamMembers = ["Alice", "Bob", "Charlie", "David"];
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('/path/to/your/categories.json');
-                const data: Category[] = await response.json();
+                const response = await fetch('/output.json');
+                const data: data[] = await response.json();
                 setCategories(data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -29,10 +29,9 @@ const TaskPage: React.FC = () => {
         <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
             <div className="w-full max-w-3xl text-center">
                 <h1 className="text-2xl font-bold mb-20">Tasks</h1>
-                {categories.map((category, index) => (
+                {categories.map((data, index) => (
                     <div key={index} className="mb-4">
-                        <h2 className="text-xl font-semibold">{category.category}</h2>
-                        <TaskList tasks={category.tasks} teamMembers={teamMembers} />
+                        <TaskList tasks={data.tasks} catagory={data.category} teamMembers={teamMembers} />
                     </div>
                 ))}
             </div>
