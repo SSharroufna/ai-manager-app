@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 interface TaskItemProps {
-    task: { name: string; assignedTo?: string }; 
+    task: { name: string; assignedTo?: string; dueDate?: string }; 
     teamMembers: string[];
     onAssign: (task: string, member: string) => void;
 }
@@ -15,36 +15,52 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers, onAssign }) => {
     return (
         <li className="p-2 border-b border-gray-200 flex items-center justify-between space-x-4">
             <span className="flex-grow text-left">{task.name}</span>
-            <div className="relative">
-                <button
-                    className={`px-4 py-2 rounded-md ${task.assignedTo ? "bg-gray-400 text-white" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-                    onClick={toggleMenu}
-                >
-                    {task.assignedTo ? `${task.assignedTo}` : "Assign"}
-                </button>
-                {isOpen && (
-                    <ul className="absolute bg-white shadow-md rounded-lg mt-2 p-2 w-48 border border-gray-300 z-10">
-                        {teamMembers.map((member, index) => (
+            <div className="flex items-center gap-4">
+                {task.dueDate && (
+                    <span className="text-sm text-gray-600">
+                        Due: {task.dueDate}
+                    </span>
+                )}
+                <div className="relative">
+                    <button
+                        className={`px-4 py-2 rounded-md ${task.assignedTo ? "bg-gray-400 text-white" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+                        onClick={toggleMenu}
+                    >
+                        {task.assignedTo ? `${task.assignedTo}` : "Assign"}
+                    </button>
+                    {isOpen && (
+                        <ul className="absolute bg-white shadow-md rounded-lg mt-2 p-2 w-48 border border-gray-300 z-10">
                             <li
-                                key={index}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
                                 onClick={() => {
-                                    onAssign(task.name, member);
+                                    onAssign(task.name, ""); // Unassign task
                                     setIsOpen(false);
                                 }}
                             >
-                                {member}
+                                Unassign
                             </li>
-                        ))}
-                    </ul>
-                )}
+                            {teamMembers.map((member, index) => (
+                                <li
+                                    key={index}
+                                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                                    onClick={() => {
+                                        onAssign(task.name, member);
+                                        setIsOpen(false);
+                                    }}
+                                >
+                                    {member}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
             </div>
         </li>
     );
 };
 
 interface TaskListProps {
-    tasks: { name: string; assignedTo?: string }[];
+    tasks: { name: string; assignedTo?: string; dueDate?: string }[];
     category: string;
     teamMembers: string[];
     onAssign: (task: string, member: string) => void;
@@ -58,7 +74,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, category, teamMembers, onAss
                 {tasks.map((task, index) => (
                     <TaskItem 
                         key={index} 
-                        task={task} // 
+                        task={task} 
                         teamMembers={teamMembers} 
                         onAssign={onAssign} 
                     />
