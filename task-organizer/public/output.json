@@ -1,31 +1,10 @@
 [
     {
-        "category": "Propulsion",
-        "tasks": [
-            {
-                "name": "Define motor geometry",
-                "dueDate": ""
-            },
-            {
-                "name": "Complete thrust analysis calculations",
-                "dueDate": ""
-            },
-            {
-                "name": "Choose the type of solid fuel",
-                "dueDate": ""
-            }
-        ]
-    },
-    {
         "category": "Electronics",
         "tasks": [
             {
-                "name": "Draw electronics diagram for the sensors",
-                "dueDate": "03/03/2025"
-            },
-            {
-                "name": "Test the Arduino",
-                "dueDate": ""
+                "name": "integrate the feedback sensors",
+                "dueDate": "03/08/2025"
             }
         ]
     },
@@ -33,20 +12,19 @@
         "category": "Structures",
         "tasks": [
             {
-                "name": "Build the test stand",
-                "dueDate": "03/02/2025"
-            },
+                "name": "make adjustments to improve the torque capacity at the elbow joint"
+            }
+        ]
+    },
+    {
+        "category": "Prototyping",
+        "tasks": [
             {
-                "name": "Assemble the test stand",
+                "name": "run the base motor control algorithms on the prototype",
                 "dueDate": ""
             },
             {
-                "name": "Strength test the test stand",
-                "dueDate": ""
-            },
-            {
-                "name": "Set up the hydraulic press for testing",
-                "dueDate": ""
+                "name": "test the precision of the prototype"
             }
         ]
     }

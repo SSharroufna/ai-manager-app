@@ -62,9 +62,8 @@ app.post('/uploadedFile', upload.single('audio'), (req, res) => {
       }
       console.log(`stdout: ${stdout}`);
 
-      // Parse the output from agent.py and send it as the response
-      const result = JSON.parse(stdout);
-      res.json(result);
+      // Send a simple success response
+      res.status(200).send('Audio file processed successfully.');
     });
   });
 });
