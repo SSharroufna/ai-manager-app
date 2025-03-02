@@ -1,10 +1,19 @@
 [
     {
+        "category": "Admin",
+        "tasks": [
+            {
+                "name": "eat some chips",
+                "dueDate": "03/02/2025"
+            }
+        ]
+    },
+    {
         "category": "Electronics",
         "tasks": [
             {
-                "name": "integrate the feedback sensors",
-                "dueDate": "03/08/2025"
+                "name": "Marius drink a Celsius",
+                "dueDate": "03/03/2025"
             }
         ]
     },
@@ -12,19 +21,8 @@
         "category": "Structures",
         "tasks": [
             {
-                "name": "make adjustments to improve the torque capacity at the elbow joint"
-            }
-        ]
-    },
-    {
-        "category": "Prototyping",
-        "tasks": [
-            {
-                "name": "run the base motor control algorithms on the prototype",
-                "dueDate": ""
-            },
-            {
-                "name": "test the precision of the prototype"
+                "name": "build the entire static test stand",
+                "dueDate": "03/10/2025"
             }
         ]
     }

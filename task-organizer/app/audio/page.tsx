@@ -1,107 +1,100 @@
-
 // pages/index.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Mic, Upload, Loader2 } from "lucide-react"
-import AudioRecorder from "@/components/audio-recorder"
-import AudioUploader from "@/components/audio-uploader"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Mic, Upload, Loader2 } from "lucide-react";
+import AudioRecorder from "@/components/audio-recorder";
+import AudioUploader from "@/components/audio-uploader";
+import Navbar from '@/components/Navbar'; // Import the Navbar component
 
-export default function Home() {
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
-  const [tasks, setTasks] = useState<string[]>([])
-  const router = useRouter()
-
-  const handleClick = () => {
-    router.push('/task');
-  };
+export default function AudioPage() {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [tasks, setTasks] = useState<string[]>([]);
+  const router = useRouter();
 
   const handleAudioCaptured = (blob: Blob) => {
-    setAudioBlob(blob)
-  }
+    setAudioBlob(blob);
+  };
 
   const handleProcessAudio = async () => {
-    if (!audioBlob) return
+    if (!audioBlob) return;
 
-    setIsProcessing(true)
+    setIsProcessing(true);
 
-    const formData = new FormData()
-    formData.append("audio", audioBlob)
+    const formData = new FormData();
+    formData.append("audio", audioBlob, "inputAudio.mp3");
 
     try {
       const response = await fetch("http://localhost:3001/uploadedFile", {
         method: "POST",
         body: formData,
-      })
+      });
 
       if (response.ok) {
-        const { id, tasks } = await response.json()
-        setTasks(tasks)
-        router.push(`/results/${id}`)
+        const { id, tasks } = await response.json();
+        setTasks(tasks);
+        router.push(`/results/${id}`);
       } else {
-        throw new Error("Failed to process audio")
+        throw new Error("Failed to process audio");
       }
     } catch (error) {
-      console.error("Error processing audio:", error)
-      setIsProcessing(false)
+      console.error("Error processing audio:", error);
+      setIsProcessing(false);
     }
-  }
+  };
 
   return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
-        <Card className="w-full max-w-3xl">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Task Organizer</CardTitle>
-
-            <CardDescription>
-              Record a conversation where tasks are being delegated, and we'll organize them by team.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="record" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="record">
-                  <Mic className="mr-2 h-4 w-4"/>
-                  Record Audio
-                </TabsTrigger>
-                <TabsTrigger value="upload">
-                  <Upload className="mr-2 h-4 w-4"/>
-                  Upload Audio
-                </TabsTrigger>
-              </TabsList>
-              <TabsContent value="record" className="mt-4">
-                <AudioRecorder onAudioCaptured={handleAudioCaptured}/>
-              </TabsContent>
-              <TabsContent value="upload" className="mt-4">
-                <AudioUploader onAudioCaptured={handleAudioCaptured}/>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-                onClick={handleProcessAudio}
-                disabled={!audioBlob || isProcessing}
-                className="w-full max-w-xs"
-            >
-              {isProcessing ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
-                    Processing...
-                  </>
-              ) : (
-                  "Process Conversation"
-              )}
-            </Button>
-
-            <Button onClick={handleClick} className="">Show Task</Button>
-
-          </CardFooter>
-        </Card>
-      </main>
-  )
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
+      <Navbar /> {/* Add Navbar at the top */}
+      <Card className="w-full max-w-3xl mt-8 shadow-lg">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-bold">Audio Import</CardTitle>
+          <CardDescription>
+            Record a conversation where tasks are being delegated, and we'll organize them by team.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="record" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="record">
+                <Mic className="mr-2 h-4 w-4"/>
+                Record Audio
+              </TabsTrigger>
+              <TabsTrigger value="upload">
+                <Upload className="mr-2 h-4 w-4"/>
+                Upload Audio
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="record" className="mt-4">
+              <AudioRecorder onAudioCaptured={handleAudioCaptured}/>
+            </TabsContent>
+            <TabsContent value="upload" className="mt-4">
+              <AudioUploader onAudioCaptured={handleAudioCaptured}/>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            onClick={handleProcessAudio}
+            disabled={!audioBlob || isProcessing}
+            className="w-full max-w-xs"
+          >
+            {isProcessing ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                Processing...
+              </>
+            ) : (
+              "Process Conversation"
+            )}
+          </Button>
+        </CardFooter>
+      </Card>
+    </main>
+  );
 }
