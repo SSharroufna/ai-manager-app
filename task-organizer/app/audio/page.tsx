@@ -1,3 +1,4 @@
+
 // pages/index.tsx
 'use client';
 
@@ -56,6 +57,7 @@ export default function Home() {
         <Card className="w-full max-w-3xl">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">Task Organizer</CardTitle>
+
             <CardDescription>
               Record a conversation where tasks are being delegated, and we'll organize them by team.
             </CardDescription>
@@ -95,7 +97,9 @@ export default function Home() {
                   "Process Conversation"
               )}
             </Button>
+
             <Button onClick={handleClick} className="">Show Task</Button>
+
           </CardFooter>
         </Card>
       </main>
