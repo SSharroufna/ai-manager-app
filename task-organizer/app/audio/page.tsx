@@ -49,7 +49,7 @@ export default function AudioPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
+    <main className="flex min-h-screen flex-col items-center p-4 bg-gray-50"> {/* "flex min-h-screen flex-col bg-gray-50"> */}
       <Navbar /> {/* Add Navbar at the top */}
       <Card className="w-full max-w-3xl mt-8 shadow-lg">
         <CardHeader className="text-center">
