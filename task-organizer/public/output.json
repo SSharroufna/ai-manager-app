@@ -41,7 +41,11 @@
                 "dueDate": ""
             },
             {
-                "name": "Strength test the test stand using hydraulic press",
+                "name": "Strength test the test stand",
+                "dueDate": ""
+            },
+            {
+                "name": "Set up the hydraulic press for testing",
                 "dueDate": ""
             }
         ]
