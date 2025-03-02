@@ -1,19 +1,31 @@
 'use client';
 import React, { useState } from 'react';
 
-interface TaskItemProps {
-    task: { name: string; assignedTo?: string; dueDate?: string }; 
-    teamMembers: string[];
-    onAssign: (task: string, member: string) => void;
+interface Task {
+    name: string;
+    assignedTo?: string;
+    dueDate?: string;
+    completed?: boolean;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers, onAssign }) => {
+interface TaskItemProps {
+    task: Task; 
+    teamMembers: string[];
+    onAssign: (task: string, member: string) => void;
+    onDragStart: (event: React.DragEvent, taskName: string) => void;
+}
+
+const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers, onAssign, onDragStart }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
-        <li className="p-2 border-b border-gray-200 flex items-center justify-between space-x-4">
+        <li 
+            className="p-2 border-b border-gray-600 flex items-center justify-between space-x-4 cursor-grab"
+            draggable
+            onDragStart={(event) => onDragStart(event, task.name)} // Drag start event
+        >
             <span className="flex-grow text-left">{task.name}</span>
             <div className="flex items-center gap-4">
                 {task.dueDate && (
@@ -39,6 +51,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers, onAssign }) => {
                             >
                                 Unassign
                             </li>
+                            <hr className="my-2 border-gray-300" />
                             {teamMembers.map((member, index) => (
                                 <li
                                     key={index}
@@ -60,16 +73,19 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, teamMembers, onAssign }) => {
 };
 
 interface TaskListProps {
-    tasks: { name: string; assignedTo?: string; dueDate?: string }[];
+    tasks: Task[];
     category: string;
     teamMembers: string[];
     onAssign: (task: string, member: string) => void;
+    onDragStart: (event: React.DragEvent, taskName: string) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, category, teamMembers, onAssign }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, category, teamMembers, onAssign, onDragStart }) => {
     return (
-        <div className="w-full max-w-xl mt-4 mx-auto bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
-            <h3 className="text-lg font-semibold mb-2 text-center">{category}</h3>
+        <div className="w-full max-w-xl mt-4 mx-auto flex flex-col items-center">
+            <h3 className="text-lg font-semibold mb-4 pb-2 border-b-2 border-gray-600 w-full">
+                {category}
+            </h3>
             <ul className="list-disc pl-5 w-full">
                 {tasks.map((task, index) => (
                     <TaskItem 
@@ -77,6 +93,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, category, teamMembers, onAss
                         task={task} 
                         teamMembers={teamMembers} 
                         onAssign={onAssign} 
+                        onDragStart={onDragStart} // Pass down drag function
                     />
                 ))}
             </ul>
