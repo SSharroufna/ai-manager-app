@@ -33,8 +33,9 @@ prompt = (
     "        ]\n"
     "    }\n"
     "]\n\n"
+
     "Each object in the array contains a category and its respective todo list items. "
-    "Ensure the JSON is properly formatted and can be directly copied and pasted. Here is the transcription:"
+    "Ensure the JSON is properly formatted and can be directly copied and pasted. Do not add any extra words/comments/notes beyond the format I've given you above. Here is the transcription:"
 )
 # print(prompt)
 file_path = os.path.join(os.path.dirname(__file__), "transcription.txt")
@@ -56,12 +57,14 @@ print(chat_completion.choices[0].message.content)
 
 # Save the response as a .json file
 output_path = os.path.join(os.path.dirname(__file__), "../task-organizer/public/output.json")
+print("\n\n OUTPUT JSON PATH: ")
 print(output_path)
+print("\n")
 with open(output_path, "w") as json_file:
     json.dump(json.loads(chat_completion.choices[0].message.content), json_file, indent=4)
 
 # Define the path to the transcription file
-transcription_file_path = "backend/transcriptions/transcription.txt"
+transcription_file_path = "backend/transcription.txt"
 
 # Read the transcription
 with open(transcription_file_path, "r", encoding="utf-8") as file:
