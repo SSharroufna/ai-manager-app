@@ -15,7 +15,7 @@ input_audio_path = sys.argv[1]
 transcript = transcriber.transcribe(input_audio_path)
 
 # Define the path to the transcriptions folder
-transcriptions_folder = "backend/transcriptions"
+transcriptions_folder = "../backend"
 
 # Create the transcriptions folder if it doesn't exist
 os.makedirs(transcriptions_folder, exist_ok=True)
