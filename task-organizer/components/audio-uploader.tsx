@@ -16,6 +16,8 @@ export default function AudioUploader({ onAudioCaptured }: AudioUploaderProps) {
   const [audioFile, setAudioFile] = useState<File | null>(null)
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +47,10 @@ export default function AudioUploader({ onAudioCaptured }: AudioUploaderProps) {
         const blob = new Blob([buffer], { type: file.type })
         onAudioCaptured(blob)
       })
+
+      // Create a new Audio object
+      const newAudio = new Audio(url);
+      setAudio(newAudio);
     }
   }
 
@@ -55,18 +61,24 @@ export default function AudioUploader({ onAudioCaptured }: AudioUploaderProps) {
 
     setAudioFile(null)
     setAudioURL(null)
+    setAudio(null);
+    setIsPlaying(false);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
   }
 
-  const playAudio = () => {
-    if (audioURL) {
-      const audio = new Audio(audioURL)
-      audio.play()
+  const toggleAudio = () => {
+    if (audio) {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      setIsPlaying(!isPlaying);
     }
-  }
+  };
 
   return (
     <Card className="p-6">
@@ -99,8 +111,8 @@ export default function AudioUploader({ onAudioCaptured }: AudioUploaderProps) {
               <div className="truncate max-w-[200px]">{audioFile.name}</div>
 
               <div className="flex space-x-2">
-                <Button size="sm" variant="ghost" onClick={playAudio}>
-                  <Play className="h-4 w-4" />
+                <Button size="sm" variant="ghost" onClick={toggleAudio}>
+                  <Play className={`h-4 w-4 ${isPlaying ? "text-red-500" : ""}`} />
                 </Button>
 
                 <Button size="sm" variant="ghost" onClick={clearFile}>
