@@ -7,11 +7,11 @@
                 "dueDate": ""
             },
             {
-                "name": "Complete thrust analysis calculations",
+                "name": "Choose the type of solid fuel",
                 "dueDate": ""
             },
             {
-                "name": "Choose the type of solid fuel",
+                "name": "Complete thrust analysis calculations",
                 "dueDate": ""
             }
         ]
@@ -20,8 +20,8 @@
         "category": "Electronics",
         "tasks": [
             {
-                "name": "Draw an electronics diagram for the sensors",
-                "dueDate": "03/05/2025"
+                "name": "Draw electronics diagram for the sensors",
+                "dueDate": "03/03/2025"
             },
             {
                 "name": "Test the Arduino",
@@ -34,18 +34,14 @@
         "tasks": [
             {
                 "name": "Build the test stand",
-                "dueDate": ""
+                "dueDate": "03/02/2025"
             },
             {
                 "name": "Assemble the test stand",
                 "dueDate": ""
             },
             {
-                "name": "Strength test the test stand",
-                "dueDate": ""
-            },
-            {
-                "name": "Set up the hydraulic press for testing",
+                "name": "Strength test the test stand using hydraulic press",
                 "dueDate": ""
             }
         ]
