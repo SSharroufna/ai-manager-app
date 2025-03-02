@@ -26,3 +26,4 @@ Thumbs.db   # Windows
 # JetBrains IDEs
 .idea/
 /myvenv
+backend/path_stuff.py
