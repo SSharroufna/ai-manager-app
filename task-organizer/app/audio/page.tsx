@@ -1,58 +1,63 @@
+
+// pages/index.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Mic, Upload, Loader2 } from "lucide-react";
-import AudioRecorder from "@/components/audio-recorder";
-import AudioUploader from "@/components/audio-uploader";
-import Navbar from '@/components/Navbar';
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Mic, Upload, Loader2 } from "lucide-react"
+import AudioRecorder from "@/components/audio-recorder"
+import AudioUploader from "@/components/audio-uploader"
 
-export default function AudioPage() {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-  const [tasks, setTasks] = useState<string[]>([]);
-  const router = useRouter();
+export default function Home() {
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
+  const [tasks, setTasks] = useState<string[]>([])
+  const router = useRouter()
 
-  const handleAudioCaptured = (blob: Blob) => {
-    setAudioBlob(blob);
+  const handleClick = () => {
+    router.push('/task');
   };
 
+  const handleAudioCaptured = (blob: Blob) => {
+    setAudioBlob(blob)
+  }
+
   const handleProcessAudio = async () => {
-    if (!audioBlob) return;
+    if (!audioBlob) return
 
-    setIsProcessing(true);
+    setIsProcessing(true)
 
-    const formData = new FormData();
-    formData.append("audio", audioBlob);
+    const formData = new FormData()
+    formData.append("audio", audioBlob)
 
     try {
       const response = await fetch("/api/process-audio", {
         method: "POST",
         body: formData,
-      });
+      })
 
       if (response.ok) {
-        const { id, tasks } = await response.json();
-        setTasks(tasks);
-        router.push(`/results/${id}`);
+        const { id, tasks } = await response.json()
+        setTasks(tasks)
+        router.push(`/results/${id}`)
       } else {
-        throw new Error("Failed to process audio");
+        throw new Error("Failed to process audio")
       }
     } catch (error) {
-      console.error("Error processing audio:", error);
-      setIsProcessing(false);
+      console.error("Error processing audio:", error)
+      setIsProcessing(false)
     }
-  };
+  }
 
   return (
       <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
-        <Navbar /> {/* Add Navbar at the top */}
-        <Card className="w-full max-w-3xl mt-8">
+        <Card className="w-full max-w-3xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Audio Import</CardTitle>
+            <CardTitle className="text-2xl font-bold">Task Organizer</CardTitle>
+
             <CardDescription>
               Record a conversation where tasks are being delegated, and we'll organize them by team.
             </CardDescription>
@@ -92,6 +97,9 @@ export default function AudioPage() {
                   "Process Conversation"
               )}
             </Button>
+
+            <Button onClick={handleClick} className="">Show Task</Button>
+
           </CardFooter>
         </Card>
       </main>

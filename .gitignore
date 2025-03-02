@@ -27,3 +27,4 @@ Thumbs.db   # Windows
 .idea/
 /myvenv
 backend/path_stuff.py
+backend/path_stuff.py
