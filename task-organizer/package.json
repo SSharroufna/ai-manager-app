@@ -1,5 +1,5 @@
 {
-  "name": "my-v0-project",
+  "name": "ai-project-manager",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -71,6 +71,7 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5",
+    "next": "14.2.16",
     "webpack": "^5.98.0",
     "webpack-dev-server": "^5.2.0"
   }
