@@ -182,10 +182,14 @@ const TaskPage: React.FC = () => {
                                     const task = categories
                                         .flatMap((cat) => cat.tasks)
                                         .find((t) => t.name === taskName);
+                                    const category = categories.find((cat) =>
+                                        cat.tasks.some((t) => t.name === taskName)
+                                    )?.category;
                                     return {
                                         name: taskName,
                                         dueDate: task?.dueDate,
                                         completed: taskCompletion[taskName] || false,
+                                        category: category || "Uncategorized", // Fallback for tasks without a category
                                     };
                                 })
                                 .sort((a, b) => {
@@ -210,22 +214,36 @@ const TaskPage: React.FC = () => {
                                     </button>
                                     <h3 className="text-lg font-semibold">{member}</h3>
                                     <ul className="mt-2">
-                                        {assignedTasks.map((task, index) => (
-                                            <li
-                                                key={index}
-                                                className={`p-2 rounded mt-1 flex justify-between items-center ${
-                                                    task.completed ? "bg-green-100 line-through" : "bg-gray-200"
-                                                }`}
-                                            >
-                                                <span>{task.name}</span>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={task.completed || false}
-                                                    onChange={() => handleToggleCompletion(task.name)}
-                                                    className="cursor-pointer"
-                                                />
-                                            </li>
-                                        ))}
+                                        {assignedTasks.map((task, index) => {
+                                            const categoryIndex = categories.findIndex(
+                                                (cat) => cat.category === task.category
+                                            );
+                                            const categoryColor = getCategoryColor(categoryIndex);
+
+                                            return (
+                                                <li
+                                                    key={index}
+                                                    className={`p-2 rounded mt-1 flex justify-between items-center ${
+                                                        task.completed ? "bg-green-100 line-through" : "bg-gray-200"
+                                                    }`}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        {/* Colored rectangle */}
+                                                        <div
+                                                            className={`w-2 h-6 ${categoryColor}`}
+                                                            style={{ minWidth: "8px" }} // Ensure the rectangle has a minimum width
+                                                        ></div>
+                                                        <span>{task.name}</span>
+                                                    </div>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={task.completed || false}
+                                                        onChange={() => handleToggleCompletion(task.name)}
+                                                        className="cursor-pointer"
+                                                    />
+                                                </li>
+                                            );
+                                        })}
                                         {assignedTasks.length === 0 && (
                                             <p className="text-gray-500">No tasks assigned</p>
                                         )}
